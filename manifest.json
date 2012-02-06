@@ -1,0 +1,28 @@
+{
+    "background_page": "background.html",
+    "options_page": "option.html",
+    "browser_action": {
+        "default_icon": "icon.png",
+        "default_title": "Google+ Extreme Button"
+    },
+
+    "content_scripts": [
+        {
+            "exclude_globs": [],
+            "include_globs": ["https://plus.google.com/*"],
+            "js": ["gpeb.js"],
+            "permissions": ["http://readitlaterlist.com/*", "https://www.evernote.com/*", "http://www.evernote.com/*"],
+            "matches": ["http://plus.google.com/*", "https://plus.google.com/*", "https://www.evernote.com/*", "http://www.evernote.com/*"],
+            "run_at": "document_end"
+        }
+    ],
+    "converted_from_user_script": true,
+    "default_locale": "ja",
+    "description": "__MSG_extensiondescription__",
+    "icons": {
+        "128": "icon.png"
+    },
+    "name": "Google+ Extreme Button",
+    "update_url": "http://clients2.google.com/service/update2/crx",
+    "version": "2.26"
+}
