@@ -594,95 +594,123 @@ GpElements.prototype.contentpane = document.getElementById("contentPane");
 // ストリームの取得
 GpElements.prototype.stream = function() {
 
+    //ストリーム
     try {
-        //ストリーム
         var elm = this.contentpane.firstChild.childNodes[3].childNodes[1];
-        if(elm == undefined)
-            throw new Error();
-        return elm;
+        if(elm != undefined)
+            return elm;
     }
     catch (_error) {
-        try {
-            //ストリーム
-            var elm = this.contentpane.firstChild.firstChild.childNodes[3].childNodes[1];
-            if(elm == undefined)
-                throw new Error();
-            return elm;
-        }
-        catch (_error) {
-            try {
-                //ストリーム
-                var elm = this.contentpane.childNodes[1].firstChild.childNodes[3].childNodes[1];
-                if(elm == undefined)
-                    throw new Error();
-                return elm;
-            }
-            catch (_error) {
-                try {
-                    //ストリーム
-                    var elm = this.contentpane.childNodes[2].firstChild.childNodes[3].childNodes[1];
-                    if(elm == undefined)
-                        throw new Error();
-                    return elm;
-                }
-                catch (_error) {
-                    try {
-                        //サークル
-                        elm = this.contentpane.firstChild.firstChild.childNodes[2].childNodes[1];
-                        if(elm == undefined)
-                            throw new Error();
-                        return elm;
-
-                    }
-                    catch (_error) {
-                        try {
-                            //プロフィール
-                            elm = this.contentpane.firstChild.firstChild.childNodes[5].childNodes[4].childNodes[1].childNodes[3].childNodes[1];
-                            if(elm == undefined)
-                                throw new Error();
-                            return elm;
-                        }
-                        catch (_error) {
-                            try {
-                                //プロフィール
-                                elm = this.contentpane.firstChild.firstChild.firstChild.childNodes[5].childNodes[5].childNodes[1].childNodes[2].childNodes[1];
-                                if(elm == undefined)
-                                    throw new Error();
-
-                                return elm;
-                            }
-                            catch (_error) {
-                                try {
-                                    //プロフィール
-                                    elm = this.contentpane.childNodes[1].firstChild.firstChild.childNodes[5].childNodes[5].childNodes[1].childNodes[2].childNodes[1];
-                                    if(elm == undefined)
-                                        throw new Error();
-
-                                    return elm;
-                                }
-                                catch (_error) {
-                                    try {
-                                        //パーマリンク
-                                        elm = this.contentpane.firstChild.firstChild;
-                                        if(elm == undefined)
-                                            throw new Error();
-
-                                        return elm;
-                                    }
-                                    catch (_error) {
-
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-            }
-
-        }
-
     }
+    
+    //ストリーム
+    try {
+        var elm = this.contentpane.firstChild.firstChild.childNodes[3].childNodes[1];
+        if(elm != undefined)
+            return elm;
+    }
+    catch (_error) {
+    }
+    
+    //ストリーム
+    try {
+        var elm = this.contentpane.childNodes[1].firstChild.childNodes[3].childNodes[1];
+        if(elm != undefined)
+            return elm;
+    }
+    catch (_error) {
+    }
+    
+    //ストリーム
+    try {
+        var elm = this.contentpane.childNodes[2].firstChild.childNodes[3].childNodes[1];
+        if(elm != undefined)
+            return elm;
+    }
+    catch (_error) {
+    }
+    
+    //サークル
+    try {
+        var elm = this.contentpane.firstChild.firstChild.childNodes[2].childNodes[1];
+        if(elm != undefined)
+            return elm;
+    }
+    catch (_error) {
+    }
+    
+    //プロフィール
+    try {
+        var elm = this.contentpane.firstChild.firstChild.childNodes[5].childNodes[4].childNodes[1].childNodes[3].childNodes[1];
+        if(elm != undefined)
+            return elm;
+    }
+    catch (_error) {
+    }
+    
+    //
+    try {
+        var elm = this.contentpane.firstChild.firstChild.firstChild.childNodes[5].childNodes[5].childNodes[1].childNodes[2].childNodes[1];
+        if(elm != undefined)
+            return elm;
+    }
+    catch (_error) {
+    }
+    
+    //プロフィール
+    try {
+        var elm = this.contentpane.childNodes[1].firstChild.firstChild.childNodes[5].childNodes[5].childNodes[1].childNodes[2].childNodes[1];
+        if(elm != undefined)
+            return elm;
+    }
+    catch (_error) {
+    }
+    
+    //パーマリンク
+    try {
+        var elm = this.contentpane.firstChild.firstChild;
+        if(elm != undefined)
+            return elm;
+    }
+    catch (_error) {
+    }
+    
+    //DownloadHelperと競合(Stream)
+    try {
+        var elm = this.contentpane.childNodes[1].childNodes[3].childNodes[1];
+        if(elm != undefined)
+            return elm;
+    }
+    catch (_error) {
+    }
+    
+    //DownloadHelperと競合(Circle)
+    try {
+        var elm = this.contentpane.childNodes[1].firstChild.childNodes[2].childNodes[1];
+        if(elm != undefined)
+            return elm;
+    }
+    catch (_error) {
+    }
+    
+    //DownloadHelperと競合(検索)
+    try {
+        var elm = contentPane.childNodes[1].firstChild.childNodes[2].childNodes[2].childNodes[2].childNodes[3].childNodes[1];
+        if(elm != undefined)
+            return elm;
+    }
+    catch (_error) {
+    }
+    
+    //DownloadHelperと競合(検索)
+    try {
+        var elm = contentPane.childNodes[1].firstChild.childNodes[2].childNodes[2].childNodes[2].childNodes[4].childNodes[1];
+        if(elm != undefined)
+            return elm;
+    }
+    catch (_error) {
+    }
+    return undefined;
 }
 
 // 右カラムの要素を取得
@@ -709,14 +737,15 @@ GpElements.prototype.sharebox = function() {
         return this.contentpane.firstChild.childNodes[1].firstChild.childNodes[6].firstChild.firstChild.firstChild.firstChild;
     }
     catch (_error) {
-        try {
-            return this.contentpane.firstChild.firstChild.childNodes[1].firstChild.childNodes[6].firstChild.firstChild.firstChild.firstChild;
-        }
-        catch (_error) {
-            return null;
-        }
-
     }
+    
+    try {
+        return this.contentpane.firstChild.firstChild.childNodes[1].firstChild.childNodes[6].firstChild.firstChild.firstChild.firstChild;
+    }
+    catch (_error) {
+    }
+    return undefined;
+
 }
 
 // 共有ボタンのエレメントを取得
@@ -725,8 +754,14 @@ GpElements.prototype.sharebutton = function() {
         return this.contentpane.firstChild.firstChild.nextSibling.firstChild.nextSibling.nextSibling.firstChild.nextSibling.firstChild.nextSibling.firstChild.firstChild.firstChild.firstChild;
     }
     catch (_error) {
+    }
+    
+    try {
         return this.contentpane.firstChild.firstChild.firstChild.nextSibling.firstChild.nextSibling.nextSibling.firstChild.nextSibling.firstChild.nextSibling.firstChild.firstChild.firstChild.firstChild;
     }
+    catch (_error) {
+    }
+    return undefined;
 }
 
 // 再共有ボタンのエレメントを取得
@@ -743,10 +778,10 @@ GpElements.prototype.resharebutton = function(_elm) {
             }
         }
 
-        return null;
+        throw new Error();
     }
     catch (_error) {
-        return null;
+        return undefined;
     }
 }
 
@@ -756,7 +791,7 @@ GpElements.prototype.editbutton = function(_elm) {
         return _elm.parentNode.parentNode.parentNode.parentNode.parentNode.nextSibling.nextSibling.firstChild.firstChild.nextSibling.firstChild.firstChild.firstChild.firstChild;
     }
     catch (_error) {
-        return null;
+        return undefined;
     }
 }
 
@@ -766,7 +801,7 @@ GpElements.prototype.commentbutton = function(_elm) {
         return _elm.parentNode.parentNode.nextSibling;
     }
     catch (_error) {
-        return 0;
+        return undefined;
     }
 }
 
@@ -777,6 +812,7 @@ GpElements.prototype.post = function() {
         return new _ElementPost();
     }
     catch (_error) {
+        return undefined;
     }
 
 }
@@ -788,7 +824,7 @@ GpElements.prototype.notify = function() {
         return new _ElementNotify();
     }
     catch (_error) {
-        return null;
+        return undefined;
     }
 
 }
