@@ -2,13 +2,12 @@
     "manifest_version": 2,
     "background": {  
       "scripts": ["background.js"]  
-    },  
+    },
     "options_page": "option.html",
     "browser_action": {
         "default_icon": "icon.png",
         "default_title": "Google+ Extreme Button"
     },
-
     "content_scripts": [
         {
             "exclude_globs": [],
@@ -18,6 +17,30 @@
             "matches": ["http://plus.google.com/*", "https://plus.google.com/*", "https://www.evernote.com/*", "http://www.evernote.com/*"],
             "run_at": "document_end"
         }
+    ],
+    "web_accessible_resources": [
+        "button/Aisatsu.png",
+        "button/CircleCount.png",
+        "button/Delicious.png",
+        "button/Dokoina.png",
+        "button/Evernote.png",
+        "button/Facebook.png",
+        "button/Facebook.png",
+        "button/FullSizeImgDown.png",
+        "button/FullSizeImgOpen.png",
+        "button/fuu.png",
+        "button/gununu.png",
+        "button/Hatena.png",
+        "button/icon.png",
+        "button/mute.png",
+        "button/oh.png",
+        "button/Pinterest.png",
+        "button/RIL1.png",
+        "button/RIL2.png",
+        "button/Ripples.png",
+        "button/rtm.png",
+        "button/Tumblr.png",
+        "button/Twitter.png"
     ],
     "converted_from_user_script": true,
     "default_locale": "ja",
