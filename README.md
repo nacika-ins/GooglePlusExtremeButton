@@ -1,6 +1,7 @@
 Google+ Extreme Button
 ======================
 
+
 概要    
 ----
 Google+ Extreme Buttonは、Google+の機能を強化する非公式Chrome拡張です。
