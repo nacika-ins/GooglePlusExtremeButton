@@ -59,7 +59,6 @@ var DEBUG = 0;
             if(_flag == 0) {
                 try {
                     var a = _element.parentNode.parentNode;
-                    console.log("a", a);
                 }
                 catch (_error) {
                     console.error("Google+ Extreme Button - Error : ストリームへの返信に失敗しました");

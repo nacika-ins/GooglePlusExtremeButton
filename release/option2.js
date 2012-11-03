@@ -1,0 +1,1 @@
+if(lang()=="ja")document.getElementById("menu").innerHTML="<div>\u6a5f\u80fd</div><div>\u30dc\u30bf\u30f3</div><div>\u6328\u62f6</div><div>\u521d\u671f\u5316</div><div>\u60c5\u5831</div><div>\u9023\u7d61</div>";else document.getElementById("menu").innerHTML="<div>Function</div><div>Button</div><div>Greeting</div><div>Initialization</div><div>Information</div><div>Contact</div>";
