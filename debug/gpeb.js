@@ -593,14 +593,14 @@ function GpButtonApp() {
         var li = _post.getElementsByTagName("div");
         for(var i = 0; i < li.length; i++) {
             if(li[i].getAttribute("role") == "menu") {
-                if(li[i].childNodes.length == 4) {
-                    click(li[i].firstChild.nextSibling);
+                if(li[i].childNodes.length == 3) {
+                    click(li[i].lastChild.previousSibling.previousSibling);
                 }
-                else if(li[i].childNodes.length == 3) {
-                    click(li[i].firstChild);
+                else if(li[i].childNodes.length == 1) {
+                    click(li[i].lastChild);
                 }
                 else {
-                    click(document);
+                    click(li[i].lastChild.previousSibling);
                     alert("この投稿はミュートできません");
                 }
                 return;
