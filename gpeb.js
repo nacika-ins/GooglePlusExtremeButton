@@ -25,11 +25,14 @@ var DEBUG = 0;
 /* 関数群
 //-------------------------------------------------------------------------------*/
 
-    /* 自動ポストスクリプト
+    /* 自動ポストスクリプト console.log("自動投稿機能開始");
     -------------------------------------------------------------------------------*/
     function autopost(_element, _text, _flag, _ge, _isRecursive) {
+
         try {
 
+            /* ポストの親要素の取得 console.log("ポストの親要素", elm);
+            -------------------------------------------------------------------------------*/
             var elm = _element;
             for(var i = 0; i < 200; i++) {
                 // 親のエレメントを取得する
@@ -49,45 +52,44 @@ var DEBUG = 0;
                 }
                 catch (_error) {
                 }
-
             }
 
-            // 通常の実行
+            /* 通常の実行(+1領域の取得) console.log("+1領域の取得", a);
+            -------------------------------------------------------------------------------*/
             if(_flag == 0) {
                 try {
                     var a = _element.parentNode.parentNode;
-                    // //////console.log("a", a);
+                    console.log("a", a);
                 }
                 catch (_error) {
                     console.error("Google+ Extreme Button - Error : ストリームへの返信に失敗しました");
                 }
             }
 
-            // 返信の実行
+
+            /* 返信の実行 console.log("返信の実行", reply, username);
+            -------------------------------------------------------------------------------*/
             else if(_flag == 1) {
 
-                // //////console.log("返信を実行します");
 
                 // 返信IDの取得
                 try {
                     var reply = _element.parentNode.parentNode.parentNode.firstChild.getAttribute("oid");
-                    // //////console.log("返信ID", reply);
                 }
                 catch (_error) {
-                    // //////console.log("返信IDの取得に失敗しました");
                 }
 
                 // 返信するユーザー名の取得
                 try {
                     var username = _element.parentNode.parentNode.parentNode.firstChild.innerHTML;
-                    // //////console.log("ユーザーID", username);
                 }
                 catch (_error) {
-                    // //////console.log("返信するユーザー名の取得に失敗しました");
                 }
 
             }
-            // ポストによる返信の実行
+
+            /* ポストによる返信の実行 console.log("ポストによる返信の実行", post, reply, username);
+            -------------------------------------------------------------------------------*/
             else if(_flag == 2) {
 
                 var post = _ge.post().elm(_element);
@@ -97,14 +99,11 @@ var DEBUG = 0;
 
                 // 返信するユーザー名の取得
                 var username = post.auther();
+
             }
 
-            // 全体処理
-            // //////console.log("全体処理を行います");
-
-            // コメント欄を開く
-            // //////console.log("コメント欄を開いています");
-            // //////console.log("b", b);
+            /* コメント投稿欄の位置を取得
+            -------------------------------------------------------------------------------*/
             var cl = b.firstChild.childNodes[1].childNodes[2].getElementsByTagName("div");
             for(var i = 0; i < cl.length; i++) {
                 try {
@@ -114,45 +113,39 @@ var DEBUG = 0;
                     }
                 }
                 catch (_error) {
-                    // console.error("コメント投稿欄の位置が不明です");
                 }
             }
-            // //////console.log("comarea", comarea);
+
+            /* コメントエリアをクリック console.log("コメントエリアをクリック");
+            -------------------------------------------------------------------------------*/
             click(comarea);
 
-            // 「.editor」要素があるか調べる
-            // //////console.log(".editor要素", b);
+            /* 「.editor」要素があるか調べる console.log(".editor要素があるか調べる", f);
+            -------------------------------------------------------------------------------*/
             var d = b.getElementsByTagName("div");
             var e = d.length;
             var f = 0;
             for(var g = 0; g < e; g++) {
                 if(d[g].id.match(/.*\.editor/)) {
-                    // //////console.log("editor", d[g]);
                     f = 1;
                     break;
                 }
             }
 
+            /* コメント投稿ボタンとコメントリンクボタンを探す
+            -------------------------------------------------------------------------------*/
             var commentLink;
-
             if(f == 0) {
-                // 投稿ボタンが見つかるまで実行
                 a = a.parentNode.firstChild;
                 while(1) {
                     try {
                         a = a.nextSibling;
                     }
                     catch (_error) {
-                        // 見つからなかった場合ループを抜ける
                         break;
                     }
                     try {
-                        // コメントリンクボタンが見つかるまで繰り返す
                         if(a.getAttribute("role") == "button") {
-                            
-                            
-
-                            // コメントリンクボタンをクリックする
                             var c = document.createEvent("MouseEvents");
                             commentLink = c;
                             c.initEvent("click", true, false);
@@ -165,13 +158,16 @@ var DEBUG = 0;
                 }
             }
 
-            //再帰処理
+
+            /* 再帰処理 console.log("再帰処理を行った");
+            -------------------------------------------------------------------------------*/
             if (_isRecursive) {
                 return;
             }
 
 
-            // 遅延させる
+            /* 遅延させる
+            -------------------------------------------------------------------------------*/
             setTimeout(function() {
 
                 // 「.editor」エレメントを探す
@@ -233,13 +229,9 @@ var DEBUG = 0;
                                         })();
                                         
                                         d[f].firstChild.firstChild.innerHTML += "&nbsp;";
-                                        
                                         click(d[f].firstChild.firstChild);
-                                        
 
                                         //再帰処理
-                                 
-                                        console.log(d[f].firstChild.firstChild);
                                         d[f].firstChild.firstChild.blur();
                    
                                         //console.log(_element.parentNode.getElementsByClassName("GpebReply")[0]);
