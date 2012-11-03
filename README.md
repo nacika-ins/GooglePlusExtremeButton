@@ -1,5 +1,5 @@
-Google+ Extreme Button
-======================
+Google+ Extreme Button 2.68
+===========================
 
 
 概要    
