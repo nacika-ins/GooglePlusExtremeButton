@@ -21,17 +21,33 @@
 /* デバッグモード
 -------------------------------------------------------------------------------*/
 var DEBUG = 0;
+var trans;
+var translog = "■";
+var transTimer;
+if (DEBUG) {
+    trans = function(_trans) {
+        clearTimeout(transTimer);
+        transTimer = setTimeout(function(){
+            translog = "■";
+        }, 5000);
+        translog += " > " + _trans;
+        console.log(translog);
+    };
+}
+else {
+    trans = function(_trans){};
+}
 
 /* 関数群
 //-------------------------------------------------------------------------------*/
 
-    /* 自動ポストスクリプト console.log("自動投稿機能開始");
+    /* 自動ポストスクリプト trans("自動投稿機能開始");
     -------------------------------------------------------------------------------*/
     function autopost(_element, _text, _flag, _ge, _isRecursive) {
 
         try {
 
-            /* ポストの親要素の取得 console.log("ポストの親要素", elm);
+            /* ポストの親要素の取得 trans("ポストの親要素", elm);
             -------------------------------------------------------------------------------*/
             var elm = _element;
             for(var i = 0; i < 200; i++) {
@@ -54,7 +70,7 @@ var DEBUG = 0;
                 }
             }
 
-            /* 通常の実行(+1領域の取得) console.log("+1領域の取得", a);
+            /* 通常の実行(+1領域の取得) trans("+1領域の取得", a);
             -------------------------------------------------------------------------------*/
             if(_flag == 0) {
                 try {
@@ -66,7 +82,7 @@ var DEBUG = 0;
             }
 
 
-            /* 返信の実行 console.log("返信の実行", reply, username);
+            /* 返信の実行 trans("返信の実行", reply, username);
             -------------------------------------------------------------------------------*/
             else if(_flag == 1) {
 
@@ -87,7 +103,7 @@ var DEBUG = 0;
 
             }
 
-            /* ポストによる返信の実行 console.log("ポストによる返信の実行", post, reply, username);
+            /* ポストによる返信の実行 trans("ポストによる返信の実行", post, reply, username);
             -------------------------------------------------------------------------------*/
             else if(_flag == 2) {
 
@@ -115,11 +131,11 @@ var DEBUG = 0;
                 }
             }
 
-            /* コメントエリアをクリック console.log("コメントエリアをクリック");
+            /* コメントエリアをクリック trans("コメントエリアをクリック");
             -------------------------------------------------------------------------------*/
             click(comarea);
 
-            /* 「.editor」要素があるか調べる console.log(".editor要素があるか調べる", f);
+            /* 「.editor」要素があるか調べる trans(".editor要素があるか調べる", f);
             -------------------------------------------------------------------------------*/
             var d = b.getElementsByTagName("div");
             var e = d.length;
@@ -158,7 +174,7 @@ var DEBUG = 0;
             }
 
 
-            /* 再帰処理 console.log("再帰処理を行った");
+            /* 再帰処理 trans("再帰処理を行った");
             -------------------------------------------------------------------------------*/
             if (_isRecursive) {
                 return;
@@ -232,9 +248,8 @@ var DEBUG = 0;
 
                                         //再帰処理
                                         d[f].firstChild.firstChild.blur();
-                   
-                                        //console.log(_element.parentNode.getElementsByClassName("GpebReply")[0]);
-                                        //click(_element.parentNode.getElementsByClassName("GpebReply")[0].getElementsByTagName("a")[0]);
+
+                                        trans("自動投稿");
                                         autopost(_element, _text, _flag, _ge, true);
 
 
@@ -473,6 +488,7 @@ function GpButtonApp() {
 
     // readitlater
     GpButtonApp.prototype.readitlater = function(_t, _postdata, _post, _elm) {
+        trans("Pocketに登録します");
         var a = _elm;
         a.removeEventListener("click", arguments.callee);
         if(a.className == "Read") {
@@ -493,7 +509,7 @@ function GpButtonApp() {
         _elm.parentNode.replaceChild(ne, _elm);
 
         var b = document.createElement("img");
-        b.src = "http://readitlaterlist.com/v2/r.gif?v=1&h=bf6b&u=" + encodeURIComponent(_postdata[3]) + "&t=" + encodeURIComponent(_postdata[1]) + "+-+" + encodeURIComponent("Google+ (" + _postdata[4]) + "%29&rand=" + Math.random();
+        b.src = "//getpocket.com/v2/r.gif?v=1&h=bf6b&rand="+Math.random()+"&u="+_postdata[3]+"&t="+(_postdata[2])+" - "+_postdata[1]+" - "+"Google+ (" + _postdata[4] + ")";
         b.style.display = "none";
     }
 
@@ -589,6 +605,7 @@ function GpButtonApp() {
     /* ミュート機能
     -------------------------------------------------------------------------------*/
     GpButtonApp.prototype.mute = function(_t, _postdata, _post, _elm) {
+        trans("ミュート機能実行");
         click(_post.firstChild.firstChild.firstChild);
         var li = _post.getElementsByTagName("div");
         for(var i = 0; i < li.length; i++) {
@@ -611,7 +628,7 @@ function GpButtonApp() {
     /* 挨拶アプリケーション
     -------------------------------------------------------------------------------*/
     GpButtonApp.prototype.aisatsu = function(_t, _postdata, _post, _elm) {
-
+        trans("挨拶実行");
         var text = _postdata[2];
 
         // 繰り返す
@@ -655,6 +672,26 @@ GpButtonApp.prototype.aisatsustr = "";
 function GpElements() {
 }
 
+    //中央要素の取得
+    GpElements.prototype.middleElms = function() {
+        trans("中央要素の取得");
+        var contentPane = this.contentpane();
+        var elms = contentPane.getElementsByTagName("div");
+        for (var i = 0; i < elms.length; i++) {
+            if (elms[i].getAttribute("role") == "navigation") {
+                return elms[i].nextSibling;
+            }
+        };
+    };
+
+    // 自分のGoogle+IDが入ったリンク要素
+    GpElements.prototype.myIdLink = function() {
+        trans("Google+IDが入ったリンク要素の取得");
+        var middleElms = this.middleElms();
+        var oid = middleElms.getElementsByTagName("a")[0].getAttribute("oid");
+        return oid;
+    };
+
     // content要素の取得(2012/04 新UI動作確認済み)
     GpElements.prototype.content = function() {
         return document.getElementById("content");
@@ -669,17 +706,15 @@ function GpElements() {
     GpElements.prototype.stream = function() {
         try {
             var el = this.contentpane().getElementsByTagName("div");
-            //// //////////console.log("ストリームを取得しています");
         }
         catch (_error) {
-            //// //////////console.log("ストリームの取得に失敗しました");
+            trans("ストリームの取得に失敗しました");
             return undefined;
         }
 
         for(var i = 0; i < el.length; i++) {
             try {
                 if(el[i] != undefined && el[i].firstChild.id.indexOf("update-") == 0) {
-                    //// //////////console.log(el[i]);
                     return el[i];
                 }
             }
@@ -692,7 +727,7 @@ function GpElements() {
     // 右カラムの要素を取得
     GpElements.prototype.rcolumn = function() {
         try {
-            //// ////////console.log("右カラムの要素を取得しています");
+            trans("右カラム要素取得");
             return this.contentpane().nextSibling;
         }
         catch (_error) {
@@ -702,7 +737,7 @@ function GpElements() {
     // 左カラムの要素を取得
     GpElements.prototype.lcolumn = function() {
         try {
-            //// ////////console.log("左カラムの要素を取得しています");
+            trans("左カラム要素取得");
             return this.content().firstChild.firstChild;
         }
         catch (_error) {
@@ -717,7 +752,6 @@ function GpElements() {
                 try {
                     if(elm[i].id.indexOf(".f") != -1) {
                         if(elm[i].parentNode.parentNode.parentNode.parentNode.getAttribute("guidedhelpid") == "sharebox") {
-                            //// ////////console.log("el[i]", elm[i]);
                             return elm[i];
                         }
 
@@ -733,7 +767,6 @@ function GpElements() {
         }
 
         return undefined;
-
     }
 
     // 共有ボタンのエレメントを取得(2012/04 新UI動作確認済み)
@@ -788,8 +821,6 @@ function GpElements() {
     GpElements.prototype.editbutton = function(_elm) {
         
         try {
-            ////console.log(_elm.parentNode.parentNode.parentNode.nextSibling);
-            ////console.log(_elm.parentNode.parentNode.parentNode.nextSibling.getElementsByTagName("div")[1]);
             return _elm.parentNode.parentNode.parentNode.nextSibling.getElementsByTagName("div")[1];
         }
         catch (_error) {
@@ -860,7 +891,6 @@ function _ElementPost() {
 
     // 指定したエレメントのポストエレメントのポスト処理を行うオブジェクトを生成する
     _ElementPost.prototype.elm = function(_elm) {
-        //// //////////////////console.log("エレメントを調べています");
         var elm = _elm;
 
         for(var i = 0; i < 200; i++) {
@@ -875,7 +905,6 @@ function _ElementPost() {
             try {
                 // ポストエレメントが見つかった
                 if(elm.id.indexOf("update-") == 0) {
-                    //// //////////////////console.log("elm", elm);
                     return new _SingleElementPost(elm);
                 }
             }
@@ -956,9 +985,11 @@ function _SingleElementPost(_elm) {
 
     // フルサイズ画像URLの取得
     _SingleElementPost.prototype.image = function() {
+        trans("フルサイズ画像URLの取得");
 
         try {
             var a = this.element.getElementsByTagName("img");
+
             // img要素の取得
             var b = a.length;
 
@@ -973,8 +1004,18 @@ function _SingleElementPost(_elm) {
             imageurl_d[0] = "";
             for(var e = 0; e < b; e++) {
 
+                // ユーザーアイコンは除外
+                if (a[e].getAttribute("oid")) {
+                    continue;
+                }
+
+                // サイズ32pxは除外
+                if (a[e].getAttribute("width") == "32px") {
+                    continue;
+                }
+
                 // フルサイズ画像URLの取得：URLの取得
-                if(a[e].src.match(/https:\/\/lh\d*\.googleusercontent.com\/.*\/.*\/.*\/.*\/.*\/.*[^photo.(jpg|gif)]/)) {
+                if(a[e].src.match(/https:\/\/lh\d*\.googleusercontent.com\/.*\/.*\/.*\/.*\/.*\/.*/)) {
                     src = a[e].src;
                     var dl = src.replace(/\/h\d*\//, "/s0-d/");
                     dl = dl.replace(/\/w\d*\//, "/s0-d/");
@@ -1012,7 +1053,7 @@ function _SingleElementPost(_elm) {
 
     // 個別ポストの本文を取得
     _SingleElementPost.prototype.body = function() {
-
+        trans("個別ポストの本文を取得");
         try {
             body = this.element.firstChild.firstChild.childNodes[4].firstChild.firstChild.innerHTML;
             body = body.replace(/<br>/g, "\n");
@@ -1026,6 +1067,7 @@ function _SingleElementPost(_elm) {
 
     // 投稿者名を取得
     _SingleElementPost.prototype.auther = function() {
+        trans("投稿者名を取得");
         try {
             var li = this.element.getElementsByTagName("a");
             return li[1].innerHTML;
@@ -1037,6 +1079,7 @@ function _SingleElementPost(_elm) {
 
     // 個別ポストのパーマリンクを取得
     _SingleElementPost.prototype.permalink = function() {
+        trans("個別ポストのパーマリンクを取得");
         try {
             var li = this.element.getElementsByTagName("a");
             for(var i = 0; i < li.length; i++) {
@@ -1058,6 +1101,7 @@ function _SingleElementPost(_elm) {
 
     // 個別ポストのポストIDを取得
     _SingleElementPost.prototype.postid = function() {
+        trans("個別ポストのポストIDを取得");
         try {
             return this.element.id.replace("update-", "");
         }
@@ -1213,7 +1257,6 @@ function _SingleElementNotify(_elm) {
 }
 
     // 通知コメントリストの取得(全体) _elmは個別ポストの要素
-    // document.getElementById("gbsf").contentDocument.getElementById("widget").childNodes[1].childNodes[2].childNodes[0]
     _SingleElementNotify.prototype.comment = function() {
         try {
             var elm = this.element.getElementsByTagName("span");
@@ -1234,14 +1277,13 @@ function _SingleElementNotify(_elm) {
         }
     }
 
-    // 通知コメントリストの+1リストを取得 2012/04/19修正
+    // 通知コメントリストの+1リストを取得
     _SingleElementNotify.prototype.plusone = function() {
         try {
             var elm = this.element.getElementsByTagName("div");
             for(var i = 0; i < elm.length; i++) {
                 try {
                     if(elm[i].id.indexOf("po-") == 0) {
-                        ////console.log("notify +1", elm[i]);
                         return elm[i].parentNode;
                     }
                 }
@@ -1264,11 +1306,11 @@ function _SingleElementNotify(_elm) {
 function _commentplusone() {
     try {
 
-        var elm = this.element.getElementsByTagName("button");
+        var elm = this.element.getElementsByTagName("span");
         for(var i = 0; i < elm.length; i++) {
             try {
-                if(elm[i].id.indexOf("po-") == 0) {
-                    return elm[i].parentNode;
+                if(elm[i].getAttribute("role") == "button") {
+                    return elm[i];
                 }
             }
             catch (_error) {
@@ -1357,6 +1399,7 @@ function ElmChecker() {
 /* ボタンを挿入する
 -------------------------------------------------------------------------------*/
 function ButtonInsert(_ge, _ga, _buttonlist, _settings) {
+    trans("ボタンを挿入");
 
     // エレメントを操作するためのオブジェクト
     this.ge = _ge;
@@ -1388,7 +1431,8 @@ function ButtonInsert(_ge, _ga, _buttonlist, _settings) {
                 var desc = data[0][1][1];
             }
 
-            // 画像がなかった場合リンクにする
+            /* 画像がない
+            -------------------------------------------------------------------------------*/
             if(data[2][0] == "") {
 
                 // セパレータを挿入する
@@ -1405,7 +1449,8 @@ function ButtonInsert(_ge, _ga, _buttonlist, _settings) {
 
                 }
             }
-            // 画像の場合
+            /* 画像の場合
+            -------------------------------------------------------------------------------*/
             else {
 
                 // ボタンを挿入する
@@ -1447,8 +1492,7 @@ function ButtonInsert(_ge, _ga, _buttonlist, _settings) {
     // CommentButtonElementの作成
     ButtonInsert.prototype.commentelm = document.createElement("span");
     ButtonInsert.prototype.commentelm.className = "GpebReply";
-    ButtonInsert.prototype.commentelm.innerHTML += '&nbsp;&nbsp;-&nbsp;&nbsp;';
-    //// ////////////console.log(language);
+    ButtonInsert.prototype.commentelm.innerHTML += '';
     if(language == "ja")
         ButtonInsert.prototype.commentelm.innerHTML += "<a href='javascript:;'>返信</a>";
     else if(language == "zh_CN")
@@ -1465,7 +1509,6 @@ function ButtonInsert(_ge, _ga, _buttonlist, _settings) {
     ButtonInsert.prototype.replyelm.style.marginTop = "12px";
 
     ButtonInsert.prototype.replyelm.innerHTML += '&nbsp;&nbsp;-&nbsp;&nbsp;';
-    //// ////////////console.log(language);
     if(language == "ja")
         ButtonInsert.prototype.replyelm.innerHTML += "<a>返信</a>";
     else if(language == "zh_CN")
@@ -1730,7 +1773,6 @@ function ButtonInsert(_ge, _ga, _buttonlist, _settings) {
 
         // plusone取得
         var plusone = nt.plusone();
-        ////console.log("plusone", plusone);
 
         // 見つからない場合飛ばす
         if(plusone == null)
@@ -1750,6 +1792,7 @@ function ButtonInsert(_ge, _ga, _buttonlist, _settings) {
 
         if(this.se[0]) {
             // ポストに返信ボタンの追加
+
             try {
 
                 //ボタンの追加
@@ -1789,6 +1832,7 @@ function ButtonInsert(_ge, _ga, _buttonlist, _settings) {
     ButtonInsert.prototype.notifycomment = function(_elm) {
         var t = this;
         // ボタンの挿入
+        trans("指定したコメント欄に要素を追加");
         (function() {
             var count = 0;
             var tid = setInterval(function() {
@@ -1820,6 +1864,17 @@ function ButtonInsert(_ge, _ga, _buttonlist, _settings) {
 
                         // 通知に返信の追加
                         if(t.se[1]) {
+                            trans("自分のIDを取得");
+
+                            // 自分の投稿には返信ボタンをつけない
+                            var myId = t.ge.__proto__.myIdLink();
+                            if (myId == mouseover.parentNode.parentNode.getElementsByTagName("a")[0].getAttribute("oid")) {
+                                trans("自分の投稿には返信ボタンをつけません");
+                                clearInterval(tid);
+                                return;
+                            }
+                            
+                            mouseover.innerHTML = "";
                             mouseover.appendChild(t.commentelm.cloneNode(true));
                             var bl = mouseover.getElementsByTagName("span");
                             for(var i = 0; i < bl.length; i++) {
@@ -1853,6 +1908,8 @@ function ButtonInsert(_ge, _ga, _buttonlist, _settings) {
     // 指定したコメント欄に要素を追加する _elm = 各コメント要素
     ButtonInsert.prototype.postcomment = function(_elm) {
 
+        trans("指定したコメント欄に要素を追加");
+
         try {
             var mouseover = this.ge.post().post(_elm)._commentplusone();
             if(!mouseover)
@@ -1876,6 +1933,15 @@ function ButtonInsert(_ge, _ga, _buttonlist, _settings) {
 
                 // 各ポストコメントに返信ボタンを追加する
                 if(flag) {
+
+                    // 自分の投稿には返信ボタンをつけない
+                    var myId = t.ge.__proto__.myIdLink();
+                    if (myId == mouseover.parentNode.parentNode.getElementsByTagName("a")[0].getAttribute("oid")) {
+                        trans("自分の投稿には返信ボタンをつけません");
+                        return true;
+                    }
+
+                    mouseover.innerHTML = "";
                     mouseover.appendChild(this.commentelm.cloneNode(true));
                     var bl = mouseover.getElementsByTagName("span");
                     for(var i = 0; i < bl.length; i++) {
@@ -1981,7 +2047,6 @@ function GpEvent(_ge, _ec, _bi, _settings) {
 
                             // ポストリストの取得
                             var gs = t.ge.stream()
-                            //// //////////console.log("gs", gs);
                             var pl = gs.childNodes;
 
                             while(1) {
@@ -2174,26 +2239,24 @@ function GpEvent(_ge, _ec, _bi, _settings) {
             // エディタか調べる
             if(t.ec.editor(elm)) {
                 if (DEBUG) {
-                    //console.log("エディタです");
+                    trans("エディタ");
                 }
 
                 // 投稿画面の場合
                 if (DEBUG) {
-                    //console.log("t.ge.sharebox()", t.ge.sharebox());
+                    trans("投稿画面を取得");
                 }
                 if(elm === t.ge.sharebox()) {
 
                     if (DEBUG) {
-                        //console.log("投稿画面です");
-                        //console.log("elm", elm);
-                        
+                        trans("投稿画面");
                     }
 
                     // 投稿画面のエディターでTABキーが押された
                     if(key == 9) {
                         
                         if (DEBUG) {
-                            //console.log("投稿画面のエディタでTABキーが押されました");
+                            trans("投稿画面のエディタでTABキーを押下");
                         }
 
                         // 投稿ボタンをフォーカスにする
@@ -2202,8 +2265,7 @@ function GpEvent(_ge, _ec, _bi, _settings) {
                             if(t.se[4]) {
                                 try {
                                     if(DEBUG){
-                                        //console.log("投稿ボタンにフォーカスを当てます");
-                                        //console.log(t.ge.sharebutton());
+                                        trans("投稿ボタンのフォーカス");
                                     }
                                     t.ge.sharebutton().focus();
                                 }
@@ -2220,16 +2282,16 @@ function GpEvent(_ge, _ec, _bi, _settings) {
                             // Shift+Enterによる投稿
                             if(t.se[3]) {
                                 if (DEBUG) {
-                                    //console.log("通常のShift+Enterで投稿しようとしています");
-                                    //console.log("クリックを行います");
-                                    //console.log("sharebutton", t.ge.sharebutton());
+                                    trans("通常のShift+Enterで投稿");
+                                    trans("クリック");
+                                    trans("共有ボタン");
                                 }
                                 click(t.ge.sharebutton());
                                 setTimeout(function() {
                                     click(t.ge.sharebutton());
                                     
                                     if (DEBUG) {
-                                        //console.log("遅延投稿機能を実行します");
+                                        trans("遅延投稿機能を実行");
                                     }
                                     
                                     //遅延投稿
@@ -2261,10 +2323,8 @@ function GpEvent(_ge, _ec, _bi, _settings) {
                     }
                 }
                 else {
-                    // ポストと共有ボタン以外(コメント欄エディタ、編集画面エディタ、再共有画面エディタ)
-                    
                     if (DEBUG) {
-                        //console.log("ポストと共有ボタン以外(コメント欄エディタ、編集画面エディタ、再共有画面エディタ)です。");
+                        trans("ポストと共有ボタン以外");
                     }
                     
                     // Enterキー
@@ -2273,7 +2333,7 @@ function GpEvent(_ge, _ec, _bi, _settings) {
                         if(shiftkey || cmdkey || ctrlkey) {
                             
                             if (DEBUG) {
-                                //console.log("シフトキー、コマンドキー、コントロールキーが押されました");
+                                trans("シフトキー、コマンドキー、コントロールキーが押下");
                             }
                             
                             try {
@@ -2282,12 +2342,11 @@ function GpEvent(_ge, _ec, _bi, _settings) {
 
                                     //コメント欄をShift+Enterで投稿する
                                     if (DEBUG) {
-                                        //console.log("コメント欄をShift+Enterで投稿します");
+                                        trans("コメント欄をShift+Enterで投稿");
                                     }
                                     try {
                                         var buttonelm = t.ge.commentbutton(elm)
-                                        //// ////////console.log("コメント欄のエレメント",
-                                        // buttonelm);
+                                        trans("コメント欄のエレメント");
                                         if(buttonelm == undefined) {
                                             throw new Error();
                                         }
@@ -2299,7 +2358,7 @@ function GpEvent(_ge, _ec, _bi, _settings) {
                                     }
 
                                     // 再共有の保存ボタンのエレメントを取得する
-                                    //// ////////console.log("再共有の保存ボタンのエレメントを取得します");
+                                    trans("再共有の保存ボタンのエレメントを取得します");
                                     try {
                                         var buttonelm = t.ge.nextbutton(elm);
                                         if(buttonelm == undefined) {
@@ -2320,7 +2379,7 @@ function GpEvent(_ge, _ec, _bi, _settings) {
                     // TABキー
                     else if(key == 9) {
                         if (DEBUG) {
-                            //console.log("TABキーが押されました");
+                            trans("TABキーが押されました");
                         }
                         setTimeout(function() {
                             if(t.se[4]) {
@@ -2329,7 +2388,7 @@ function GpEvent(_ge, _ec, _bi, _settings) {
                                     // 投稿ボタンか調べる
                                     if(elm.parentNode.parentNode.nextSibling.id.indexOf(".post") != -1) {
                                         if(DEBUG){
-                                            //console.log("投稿ボタンだったためスルーしました。");
+                                            trans("投稿ボタンだったためスルーしました。");
                                         }
                                         return;
                                     }
@@ -2340,10 +2399,10 @@ function GpEvent(_ge, _ec, _bi, _settings) {
                                 // 編集の保存ボタンのエレメントを取得する
                                 try {
                                     if (DEBUG) {
-                                        //console.log("エディタボタンにフォーカスを合わせました");
+                                        trans("エディタボタンにフォーカスを合わせました");
                                     }
-                                    //console.log(elm);
-                                    //console.log(t.ge.editbutton(elm));
+                                    trans(elm);
+                                    trans(t.ge.editbutton(elm));
                                     t.ge.editbutton(elm).focus();
                                     return;
                                 }
@@ -2353,7 +2412,7 @@ function GpEvent(_ge, _ec, _bi, _settings) {
                                 // 再共有の保存ボタンのエレメントを取得する
                                 try {
                                     if (DEBUG) {
-                                        //console.log("次のボタンにフォーカスを合わせました");
+                                        trans("次のボタンにフォーカスを合わせました");
                                     }
                                     t.ge.nextbutton(elm).focus();
                                     return;
@@ -2378,7 +2437,7 @@ function GpEvent(_ge, _ec, _bi, _settings) {
                         // フォーカスをエディタに戻す
                         setTimeout(function() {
                             try {
-                                //// ////////console.log("フォーカスをエディタに戻します");
+                                trans("フォーカスをエディタに戻します");
                                 t.ge.sharebox().focus();
                             }
                             catch (_error) {
@@ -2425,7 +2484,6 @@ function GpEvent(_ge, _ec, _bi, _settings) {
         // 通知のキーイベント
         (function() {
             var nt = t.ge.notify();
-            //////console.log(nt);
             var count = 0;
             var tid = setInterval(function() {
 
@@ -2437,7 +2495,7 @@ function GpEvent(_ge, _ec, _bi, _settings) {
                 var widget = nt.widget();
 
                 if(widget) {
-                    //////console.log(widget);
+                    trans(widget);
                     widget.addEventListener("keydown", function(_event) {
                         // 要素の取得
                         var elm = _event.target;
@@ -2643,7 +2701,7 @@ function GpEvent(_ge, _ec, _bi, _settings) {
                                 try {
                                     // コメント+1に返信ボタンを追加
                                     var li = nt.postlist().childNodes;
-                                    ////console.log("nt.postlist()", nt.postlist());
+                                    trans("nt.postlist()", nt.postlist());
                                     try {
 
                                         for(var i = 0; i < li.length; i++) {

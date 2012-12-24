@@ -89,39 +89,22 @@ function requestinit() {
 
             case "buttonlist":
                 sendResponse([[[
-                //
                 ["はてなブックマーク", "はてなブックマークへ登録します"], ["HatenaBookmark", ""]], true, ["Hatena.png", ""], 0, ["", "", ["http://b.hatena.ne.jp/add?mode=confirm&is_bm=1&title=<NAME>%20%2d%20Google%2b%20%28<TIME>%29%20%2d%20<BODY>&url=<URL>", 520, 600]]],
-                //
                 [[["Twitter", "Twitterへの共有画面を開きます"], ["Twitter", ""]], true, ["Twitter.png", ""], 0, ["", "", ["https://twitter.com/intent/tweet?text=<BODY>&url=<URL>", 600, 340]]],
-                //
                 [[["Delicious", "Deliciousへの共有画面を開きます"], ["Delicious", ""]], true, ["Delicious.png", ""], 0, ["", "", ["http://www.delicious.com/save?url=<URL>&title=<NAME>%20%2d%20Google%2b%20%28<TIME>%29&notes=<BODY>&v=6&noui=1&jump=doclose", 710, 571]]],
-                //
                 [[["Evernote", "Evernoteに保存できるようポストを選択します"], ["Evernote", ""]], true, ["Evernote.png", ""], 0, ["evernote", "", ["", 0, 0]]],
-                //
                 [[["Facebook", "Facebookで共有します"], ["Facebook", ""]], true, ["Facebook.png", ""], 0, ["", "", ["http://www.facebook.com/sharer/sharer.php?src=bm&v=4&u=<URL>&t=<NAME>%20%2d%20Google%2b%20%28<TIME>%29", 660, 520]]],
-                //
                 [[["Tumblr", "Tumblrで共有します"], ["Tumblr", ""]], true, ["Tumblr.png", ""], 0, ["tumblr", "", ["", 0, 0]]],
-                //
                 [[["Pinterest", "Pinterestで画像を共有します"], ["Pinterest", ""]], true, ["Pinterest.png", ""], 1, ["", "", ["http://pinterest.com/pin/create/bookmarklet/?media=<IMG>&url=<URL>&alt=alt&title=<NAME>%20%2d%20Google%2b%20%28<TIME>%29&is_video=false&", 632, 295]]],
-                //
-                [[["Read It Later", "Read It Laterに登録します"], ["Read It Later", ""]], true, ["RIL1.png", ""], 0, ["readitlater", "", ["", 0, 0]]], [[["Remember The Milk", "RTMにスケジュールを登録します"], ["Remember The Milk", ""]], true, ["rtm.png", ""], 0, ["", "", ["http://www.rememberthemilk.com/services/ext/addtask.rtm?d=<TIME2>&t=<BODY>", 475, 260]]],
-                //
+                [[["Pocket", "Pocketに登録します(予めログインしておかないと失敗します)"], ["Read It Later", ""]], true, ["RIL1.png", ""], 0, ["readitlater", "", ["", 0, 0]]], [[["Remember The Milk", "RTMにスケジュールを登録します"], ["Remember The Milk", ""]], true, ["rtm.png", ""], 0, ["", "", ["http://www.rememberthemilk.com/services/ext/addtask.rtm?d=<TIME2>&t=<BODY>", 475, 260]]],
                 [[["CircleCount", "CircleCountを開きます"], ["CircleCount", ""]], true, ["CircleCount.png", ""], 0, ["", "", ["http://www.circlecount.com/p/<USERID>", 925, 640]]],
-                //
                 [[["リップル", "拡散マップを表示します"], ["Ripples", ""]], true, ["Ripples.png", ""], 0, ["", "", ["https://plus.google.com/ripple/details?activityid=<ACTIVITY>&context=<ACTIVITY>", 0, 0]]],
-                //
                 [[["挨拶", "挨拶を自動で返答します"], ["hello", "hello"]], false, ["Aisatsu.png", ""], 0, ["aisatsu", "", ["", 0, 0]]],
-                //
                 [[["フルサイズ画像を開く", "フルサイズ画像を新しいウィンドウに開きます"], ["Open Fullsize Images", ""]], true, ["FullSizeImgOpen.png", ""], 1, ["OpenFullsizeImage", "", ["", 0, 0]]],
-                //
                 [[["フルサイズ画像をダウンロード", "フルサイズ画像をダウンロードします"], ["Download Fullsize Images", ""]], true, ["FullSizeImgDown.png", ""], 1, ["FullsizeDownload", "", ["", 0, 0]]],
-                //
                 [[["ミュート", "ポストをミュートにします"], ["ミュート", ""]], true, ["mute.png", ""], 0, ["mute", "", ["", 0, 0]]],
-                //
                 [[["どこいな", "どこいなを投稿します"], ["Dokoina", ""]], false, ["Dokoina.png", ""], 0, ["", "どこいな", ["", 0, 0]]],
-                //
                 [[["ぐぬぬ", "ぐぬぬを投稿します"], ["Gununu", ""]], false, ["gununu.png", ""], 0, ["", "ぐぬぬ", ["", 0, 0]]],
-                //
                 [[["ふぅ...", "ふぅ...を投稿します"], ["Dokoina", ""]], false, ["fuu.png", ""], 0, ["", "ふぅ...", ["", 0, 0]]], [[["oh...", "oh...を投稿します"], ["oh...", ""]], false, ["oh.png", ""], 0, ["", "oh...", ["", 0, 0]]]]);
                 break;
 
