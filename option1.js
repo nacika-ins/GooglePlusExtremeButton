@@ -561,8 +561,9 @@ PageManager.prototype.information = function() {
     history += 'ver.2.66 正常にボタンが機能していなかった問題の修正・マニフェストバージョン2に対応・アクティビティの非表示をデフォルトで表示するように修正\n';
     history += 'ver.2.67 コードの圧縮を行いローディングの高速化\n';
     history += 'ver.2.68 ミュート機能のバグを修正\n';
+    history += 'ver.2.69 Pocket対応。フルサイズ画像表示機能が動作しない場合がある問題の修正。公式返信ボタンをオーバーライドし、複数のメンションを飛ばせるように改良\n';
     this.body().innerHTML += '<div id="information"><img src="'+chrome.extension.getURL("icon.png")+'" /><br>Google+ Extreme Button '+
-    '2.68'+
+    '2.69'+
     '<br><textarea>'+history+'</textarea></div>';
     changewindow();
 }
